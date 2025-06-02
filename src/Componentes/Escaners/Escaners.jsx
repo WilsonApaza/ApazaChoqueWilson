@@ -1,56 +1,94 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Carousel from "react-bootstrap/Carousel";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./Escaners.css";
-//El nombre Escaners puede ser diferente
-export default function Escaners() {
-return (
-<div>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-4 formato1">
-                <div class="card">
-                    <img src="https://intecsa.com.bo/wp-content/uploads/2024/07/ESCANER-FUJITSU-FI-7260-2.jpg"
-                        class="card-img-top" alt="Waterfall" />
-                    <div class="card-body">
-                        <h5 class="card-title">Escaner Fujitsu</h5>
-                        <p class="card-text">Modelo: FI-7260</p>
-                        <Link to="/venta" data-mdb-ripple-init class="btn btn-primary">
-                        Comprar
-                        </Link>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 formato1">
-                <div class="card">
-                    <img src="https://intecsa.com.bo/wp-content/uploads/2024/07/ESCANER-FUJITSU-FI-7280-2.jpg"
-                        class="card-img-top" alt="Sunset Over the Sea" />
-                    <div class="card-body">
-                        <h5 class="card-title">Escaner Fujitsu</h5>
-                        <p class="card-text">Modelo: FI-7800</p>
-                        <a href="#!" data-mdb-ripple-init class="btn btn-primary">
-                            Comprar
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 formato1">
-                <div class="card">
-                    <img src="https://intecsa.com.bo/wp-content/uploads/2024/07/FI7600-2.jpg" class="card-img-top"
-                        alt="Sunset over the Sea" />
-                    <div class="card-body">
-                        <h5 class="card-title">Escaner Fujitsu</h5>
-                        <p class="card-text">Modelo: FI-7600</p>
-                        <a href="#!" data-mdb-ripple-init class="btn btn-primary">
-                            Comprar
-                        </a>
-                    </div>
-                </div>
-            </div>
+
+export default function EscanerUnico() {
+  const images = [
+    "https://intecsa.com.bo/wp-content/uploads/2024/07/ESCANER-FUJITSU-FI-7260-2.jpg",
+    "https://intecsa.com.bo/wp-content/uploads/2024/07/ESCANER-FUJITSU-FI-7260-3.jpg",
+    "https://intecsa.com.bo/wp-content/uploads/2024/07/FI7600-2.jpg",
+    "https://intecsa.com.bo/wp-content/uploads/2024/12/T3170M_left-paper_690x460.jpg",
+    "https://intecsa.com.bo/wp-content/uploads/2024/12/c08534509.png",
+  ];
+
+  const navigate = useNavigate();
+
+  // Datos del producto
+  const producto = {
+    nombre: "Escaner Fujitsu",
+    modelo: "FI-7260",
+    precio: 7000,
+  };
+
+  const handleComprar = () => {
+    navigate("/comprar", {
+      state: {
+        producto: producto.nombre,
+        precio: producto.precio,
+      },
+    });
+  };
+
+  return (
+    <div className="container d-flex justify-content-center mt-5">
+      <div className="card shadow" style={{ width: "350px", borderRadius: "15px", overflow: "hidden" }}>
+        <Carousel
+          interval={3500}
+          controls={true}
+          indicators={true}
+          pause="hover"
+          nextLabel=""
+          prevLabel=""
+          nextIcon={
+            <span
+              aria-hidden="true"
+              className="carousel-control-next-icon"
+              style={{
+                backgroundColor: "rgba(0,0,0,0.5)",
+                borderRadius: "50%",
+                width: "35px",
+                height: "35px",
+              }}
+            />
+          }
+          prevIcon={
+            <span
+              aria-hidden="true"
+              className="carousel-control-prev-icon"
+              style={{
+                backgroundColor: "rgba(0,0,0,0.5)",
+                borderRadius: "50%",
+                width: "35px",
+                height: "35px",
+              }}
+            />
+          }
+        >
+          {images.map((src, idx) => (
+            <Carousel.Item key={idx}>
+              <img
+                className="d-block mx-auto"
+                src={src}
+                alt={`Escaner Fujitsu imagen ${idx + 1}`}
+                style={{
+                  maxHeight: "300px",
+                  objectFit: "contain",
+                  borderRadius: "15px 15px 0 0",
+                }}
+              />
+            </Carousel.Item>
+          ))}
+        </Carousel>
+        <div className="card-body text-center">
+          <h5 className="card-title mb-2">{producto.nombre}</h5>
+          <p className="card-text mb-3">Modelo: {producto.modelo}</p>
+          <button onClick={handleComprar} className="btn btn-primary px-4">
+            Comprar
+          </button>
         </div>
+      </div>
     </div>
-    <a href="/" data-mdb-ripple-init class="btn btn-warning">
-        Volver a la pagina Principal
-    </a>
-</div>
-);
+  );
 }
